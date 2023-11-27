@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import '../data/models/professional.dart';
 import '../data/service/professional_service.dart';
@@ -7,17 +9,21 @@ class HomePage extends StatefulWidget {
   @override
   State<HomePage> createState() => _HomePageState();
 }
+
 class _HomePageState extends State<HomePage> {
+  String selectedCategory =
+      "PLMR"; // Nuevo estado para almacenar la categoría seleccionada
   List<Professional>? professionals;
   bool isLoaded = false;
   @override
   void initState() {
     super.initState();
-    loadProfessionals();
+    loadProfessionals(selectedCategory);
   }
-  Future<void> loadProfessionals() async {
+
+  Future<void> loadProfessionals(String? value) async {
     final professionalService = ProfessionalService();
-    professionals = await professionalService.getProfessionalsByCaregory();
+    professionals = await professionalService.getProfessionalsByCaregory(value);
     setState(() {
       isLoaded = true;
     });
@@ -30,13 +36,54 @@ class _HomePageState extends State<HomePage> {
           ? SafeArea(
               child: Column(
                 children: [
+                  const Text("Mano Experta",
+                      style:
+                          TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                      textAlign: TextAlign.center),
+                  Container(
+                    margin: const EdgeInsets.all(10),
+                  ),
+                  Row(
+                    children: [
+                      const SizedBox(width: 8),
+                      const Text("Buscar Categoria:"),
+                      const SizedBox(width: 8),
+                      DropdownButton<String>(
+                          value: selectedCategory,
+                          onChanged: (String? newValue) {
+                            setState(() {
+                              selectedCategory = newValue!;
+                              loadProfessionals(
+                                  selectedCategory); // Volver a cargar profesionales cuando se cambie la categoría
+                            });
+                          },
+                          items: const [
+                            DropdownMenuItem(
+                                child: Text("Plomero"), value: "PLMR"),
+                            DropdownMenuItem(
+                                child: Text("Electricista"), value: "ELTC"),
+                          ]),
+                    ],
+                  ),
                   const SizedBox(height: 8),
                   const Row(
                     children: [
-                      Expanded(child: Text('Name', textAlign: TextAlign.center)),
-                      Expanded(child: Text('Apellido', textAlign: TextAlign.center)),
-                      Expanded(child: Text('Telefono', textAlign: TextAlign.center)),
-                      Expanded(child: Text('Email', textAlign: TextAlign.center)),
+                      Expanded(
+                          child: Text('Name',
+                              textAlign: TextAlign.center,
+                              style: TextStyle(fontWeight: FontWeight.bold))),
+                      Expanded(
+                          child: Text('Apellido',
+                              textAlign: TextAlign.center,
+                              style: TextStyle(fontWeight: FontWeight.bold))),
+                      Expanded(
+                          child: Text('Telefono',
+                              textAlign: TextAlign.center,
+                              style: TextStyle(fontWeight: FontWeight.bold))),
+                      Expanded(
+                          child: Text('Email',
+                              textAlign: TextAlign.center,
+                              style: TextStyle(fontWeight: FontWeight.bold))),
                     ],
                   ),
                   const SizedBox(height: 8),
@@ -52,15 +99,25 @@ class _HomePageState extends State<HomePage> {
                                     const SizedBox(height: 4),
                                     Row(
                                       children: [
-                                        Expanded(child: Text(professional.firstName ?? 'No name')),
                                         Expanded(
-                                          child: Text(professional.lastName ?? 'No last name'),
+                                            child: Text(
+                                                professional.firstName ??
+                                                    'No name')),
+                                        Expanded(
+                                          child: Text(professional.lastName ??
+                                              'No last name'),
                                         ),
                                         Expanded(
-                                          child: Text(professional.phoneNumbers.firstOrNull!.number.toString() ?? 'No phone number'),
+                                          child: Text(professional.phoneNumbers
+                                                  .firstOrNull!.number
+                                                  .toString() ??
+                                              'No phone number'),
                                         ),
                                         Expanded(
-                                            child: Text(professional.emails.firstOrNull!.address.toString() ?? 'No email')),
+                                            child: Text(professional
+                                                    .emails.firstOrNull!.address
+                                                    .toString() ??
+                                                'No email')),
                                       ],
                                     ),
                                     const SizedBox(height: 4),
@@ -77,6 +134,35 @@ class _HomePageState extends State<HomePage> {
               ),
             )
           : const Center(child: CircularProgressIndicator()),
+    );
+  }
+}
+
+const List<String> list = <String>['One', 'Two', 'Three', 'Four'];
+
+class DropdownMenuExample extends StatefulWidget {
+  const DropdownMenuExample({super.key});
+
+  @override
+  State<DropdownMenuExample> createState() => _DropdownMenuExampleState();
+}
+
+class _DropdownMenuExampleState extends State<DropdownMenuExample> {
+  String dropdownValue = list.first;
+
+  @override
+  Widget build(BuildContext context) {
+    return DropdownMenu<String>(
+      initialSelection: list.first,
+      onSelected: (String? value) {
+        // This is called when the user selects an item.
+        setState(() {
+          dropdownValue = value!;
+        });
+      },
+      dropdownMenuEntries: list.map<DropdownMenuEntry<String>>((String value) {
+        return DropdownMenuEntry<String>(value: value, label: value);
+      }).toList(),
     );
   }
 }

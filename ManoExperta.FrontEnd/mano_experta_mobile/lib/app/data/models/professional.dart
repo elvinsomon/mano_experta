@@ -13,6 +13,7 @@ class Professional {
     String userName;
     String firstName;
     String lastName;
+    String fullName;
     int type;
     List<Category> category;
     List<PhoneNumber> phoneNumbers;
@@ -24,6 +25,7 @@ class Professional {
         required this.userName,
         required this.firstName,
         required this.lastName,
+        required this.fullName,
         required this.type,
         required this.category,
         required this.phoneNumbers,
@@ -36,6 +38,7 @@ class Professional {
         userName: json["userName"],
         firstName: json["firstName"],
         lastName: json["lastName"],
+        fullName: json["fullName"],
         type: json["type"],
         category: List<Category>.from(json["category"].map((x) => Category.fromJson(x))),
         phoneNumbers: List<PhoneNumber>.from(json["phoneNumbers"].map((x) => PhoneNumber.fromJson(x))),

@@ -40,13 +40,12 @@ class _HomePageState extends State<HomePage> {
                       style:
                           TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
                       textAlign: TextAlign.center),
-                  Container(
-                    margin: const EdgeInsets.all(10),
-                  ),
+                  
+                  const SizedBox(height: 24),
                   Row(
                     children: [
                       const SizedBox(width: 8),
-                      const Text("Buscar Categoria:"),
+                      const Text("Categoria:"),
                       const SizedBox(width: 8),
                       DropdownButton<String>(
                           value: selectedCategory,
@@ -65,15 +64,11 @@ class _HomePageState extends State<HomePage> {
                           ]),
                     ],
                   ),
-                  const SizedBox(height: 8),
+                  const SizedBox(height: 16),
                   const Row(
                     children: [
                       Expanded(
-                          child: Text('Name',
-                              textAlign: TextAlign.center,
-                              style: TextStyle(fontWeight: FontWeight.bold))),
-                      Expanded(
-                          child: Text('Apellido',
+                          child: Text('Nombre',
                               textAlign: TextAlign.center,
                               style: TextStyle(fontWeight: FontWeight.bold))),
                       Expanded(
@@ -101,12 +96,8 @@ class _HomePageState extends State<HomePage> {
                                       children: [
                                         Expanded(
                                             child: Text(
-                                                professional.firstName ??
+                                                professional.fullName ??
                                                     'No name')),
-                                        Expanded(
-                                          child: Text(professional.lastName ??
-                                              'No last name'),
-                                        ),
                                         Expanded(
                                           child: Text(professional.phoneNumbers
                                                   .firstOrNull!.number

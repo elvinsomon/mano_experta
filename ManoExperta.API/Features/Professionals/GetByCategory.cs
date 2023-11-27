@@ -18,6 +18,7 @@ public class GetByCategory
         public string? UserName { get; set; }
         public string? FirstName { get; set; }
         public string? LastName { get; set; }
+        public string? FullName => $"{FirstName} {LastName}";
         public UserType Type { get; set; }
         public CategoryDto[] Category { get; set; } = Array.Empty<CategoryDto>();
         public PhoneNumberDto[] PhoneNumbers { get; set; } = Array.Empty<PhoneNumberDto>();

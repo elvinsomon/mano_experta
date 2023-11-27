@@ -21,13 +21,15 @@ public class Create
     {
         public async Task<Result> Handle(Request request)
         {
-            var category = new ProfessionalCategory
+            var category = new Domain.ProfessionalCategory
             {
                 Code = request.Code,
                 Name = request.Name,
                 Description = request.Description
             };
-
+            var categoryWithSameCode = context.ProfessionalCategories
+                .SingleOrDefault(x => x.Code!.ToUpper() == request.Code!.ToUpper());
+                
             context.ProfessionalCategories.Add(category);
 
             await context.SaveChangesAsync();

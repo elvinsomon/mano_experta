@@ -12,6 +12,7 @@ var configuration = new ConfigurationBuilder()
 builder.Services.AddControllers();
 builder.Services.AddTransient<ManoExperta.API.Features.UserFeature.Create.Handler>();
 builder.Services.AddTransient<ManoExperta.API.Features.Category.Create.Handler>();
+builder.Services.AddTransient<ManoExperta.API.Features.Category.GetAll.Handler>();
 builder.Services.AddTransient<ManoExperta.API.Features.Professionals.GetByCategory.Handler>();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();

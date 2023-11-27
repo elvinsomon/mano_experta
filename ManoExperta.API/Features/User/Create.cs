@@ -1,5 +1,6 @@
 using ManoExperta.API.Data;
 using ManoExperta.API.Domain;
+using ManoExperta.API.Domain.Exceptions;
 using Microsoft.EntityFrameworkCore;
 
 namespace ManoExperta.API.Features.UserFeature
@@ -49,7 +50,7 @@ namespace ManoExperta.API.Features.UserFeature
 
                 var userWithSameUserName = await context.Users.FirstOrDefaultAsync(u => u.UserName == user.UserName);
                 if (userWithSameUserName is not null)
-                    throw new Exception("User with same user name already exists");
+                    throw new UserAlreadyExistsException("User with same user name already exists");
 
                 context.Users.Add(user);
 
@@ -121,9 +122,9 @@ namespace ManoExperta.API.Features.UserFeature
                 return email;
             }
 
-            private static async Task<List<ProfessionalCategory>> GetCategories(ApplicationDbContext context, Command command)
+            private static async Task<List<Domain.ProfessionalCategory>> GetCategories(ApplicationDbContext context, Command command)
             {
-                var professionalCategory = new List<ProfessionalCategory>();
+                var professionalCategory = new List<Domain.ProfessionalCategory>();
 
                 foreach (var code in command.ProfessionalCategoryCodes)
                 {

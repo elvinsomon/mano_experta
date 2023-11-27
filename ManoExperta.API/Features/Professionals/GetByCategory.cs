@@ -56,6 +56,7 @@ public class GetByCategory
                 .Include(p => p.WorkingHours)
                 .ToListAsync();
 
+
             return professionals.Select(p => new Result
             {
                 Id = p.Id,

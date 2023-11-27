@@ -1,4 +1,5 @@
 using ManoExperta.API.Domain;
+using ManoExperta.API.Domain.Exceptions;
 using Microsoft.AspNetCore.Mvc;
 using static ManoExperta.API.Features.UserFeature.Create;
 
@@ -10,9 +11,9 @@ namespace ManoExperta.API.Features.UserFeature;
 [Consumes("application/json")]
 public class UserController : ControllerBase
 {
-    private readonly UserFeature.Create.Handler _createUserHandler;
+    private readonly Handler _createUserHandler;
 
-    public UserController(Create.Handler createUserHandler)
+    public UserController(Handler createUserHandler)
     {
         _createUserHandler = createUserHandler;
     }
@@ -20,26 +21,37 @@ public class UserController : ControllerBase
     [HttpPost]
     public async Task<IActionResult> Create(CreateUserRequest createUserRequest)
     {
-        var command = new Command
+        try
         {
-            UserName = createUserRequest.UserName,
-            FirstName = createUserRequest.FirstName,
-            LastName = createUserRequest.LastName,
-            IsProfessional = createUserRequest.IsProfessional,
-            PhoneNumbers = createUserRequest.PhoneNumbers,
-            Emails = createUserRequest.Emails,
-            ProfessionalCategoryCodes = createUserRequest.ProfessionalCategoryCodes,
-            WorkingHours = createUserRequest.WorkingHours.Select(wh => new WorkingHoursDto
+            var command = new Command
             {
-                Day = wh.Day,
-                Start = wh.Start,
-                End = wh.End
-            }).ToArray()
-        };
-       
-        var result = await _createUserHandler.Handle(command);
-
-        return Ok(result);
+                UserName = createUserRequest.UserName,
+                FirstName = createUserRequest.FirstName,
+                LastName = createUserRequest.LastName,
+                IsProfessional = createUserRequest.IsProfessional,
+                PhoneNumbers = createUserRequest.PhoneNumbers,
+                Emails = createUserRequest.Emails,
+                ProfessionalCategoryCodes = createUserRequest.ProfessionalCategoryCodes,
+                WorkingHours = createUserRequest.WorkingHours.Select(wh => new WorkingHoursDto
+                {
+                    Day = wh.Day,
+                    Start = wh.Start,
+                    End = wh.End
+                }).ToArray()
+            };
+           
+            var result = await _createUserHandler.Handle(command);
+    
+            return Ok(result);
+        }
+        catch (DomainException ex)
+        {
+            return BadRequest(ex.Message);
+        }
+        catch (Exception ex)
+        {
+            throw;
+        }
     }
 
     public class CreateUserRequest

@@ -7,7 +7,9 @@ namespace ManoExperta.API.Features.Category;
 [Route("[controller]/[action]")]
 [Produces("application/json")]
 [Consumes("application/json")]
-public class CategoryController(Create.Handler create) : ControllerBase
+public class CategoryController(
+    Create.Handler create,
+    GetAll.Handler getAll) : ControllerBase
 {
     [HttpPost]
     public async Task<IActionResult> Create(CreateCategoryRequest createCategoryRequest)
@@ -21,6 +23,13 @@ public class CategoryController(Create.Handler create) : ControllerBase
 
         var result = await create.Handle(command);
 
+        return Ok(result);
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> GetAll()
+    {
+        var result = await getAll.Handle();
         return Ok(result);
     }
 }

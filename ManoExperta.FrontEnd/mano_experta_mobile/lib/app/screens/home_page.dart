@@ -28,18 +28,28 @@ class _HomePageState extends State<HomePage> {
       isLoaded = true;
     });
   }
+   final topAppBar = AppBar(
+      elevation: 0.1,
+      backgroundColor:const Color.fromARGB(255, 233, 237, 245),
+      title:  const Text("Mano Experta",
+                      style:
+                          TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                      textAlign: TextAlign.center),
+    );
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Color.fromARGB(255, 233, 237, 245),
+       appBar: topAppBar,
       body: isLoaded && professionals != null
           ? SafeArea(
               child: Column(
                 children: [
-                  const Text("Mano Experta",
-                      style:
-                          TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-                      textAlign: TextAlign.center),
+                  // const Text("Mano Experta",
+                  //     style:
+                  //         TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                  //     textAlign: TextAlign.center),
                   
                   const SizedBox(height: 24),
                   Row(

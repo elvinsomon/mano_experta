@@ -6,8 +6,6 @@ namespace ManoExperta.API.Features.Professionals;
 [Route("[controller]/[action]")]
 public class ProfessionalController(GetByCategory.Handler getByCategory) : ControllerBase
 {
-
-
     [HttpGet]
     public async Task<IActionResult> GetByCategory(string categoryCode)
     {

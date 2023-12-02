@@ -1,0 +1,64 @@
+{
+  "format": 1,
+  "restore": {
+    "/Users/elvinsomon/Documents/PUCMM/Programacion Movil/ManoExperta/ManoExperta.Admin.Web/ManoExperta.Admin.Web.csproj": {}
+  },
+  "projects": {
+    "/Users/elvinsomon/Documents/PUCMM/Programacion Movil/ManoExperta/ManoExperta.Admin.Web/ManoExperta.Admin.Web.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/Users/elvinsomon/Documents/PUCMM/Programacion Movil/ManoExperta/ManoExperta.Admin.Web/ManoExperta.Admin.Web.csproj",
+        "projectName": "ManoExperta.Admin.Web",
+        "projectPath": "/Users/elvinsomon/Documents/PUCMM/Programacion Movil/ManoExperta/ManoExperta.Admin.Web/ManoExperta.Admin.Web.csproj",
+        "packagesPath": "/Users/elvinsomon/.nuget/packages/",
+        "outputPath": "/Users/elvinsomon/Documents/PUCMM/Programacion Movil/ManoExperta/ManoExperta.Admin.Web/obj/",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "/Users/elvinsomon/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net8.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net8.0": {
+            "targetAlias": "net8.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net8.0": {
+          "targetAlias": "net8.0",
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.AspNetCore.App": {
+              "privateAssets": "none"
+            },
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/8.0.100/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}

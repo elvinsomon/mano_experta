@@ -3,19 +3,11 @@ import 'app/screens/home_page.dart';
 import 'dart:ui' as ui;
 
 void main() {
-
   runApp(
-    const MaterialApp(home: HomePage()), // use MaterialApp
+    const MaterialApp(home: MyApp()), 
   );
 
-  //runApp(const HomePage());
-
-  // runApp(
-  //   new MediaQuery(
-  //       data: new MediaQueryData.fromWindow(ui.window),
-  //       child: new Directionality(
-  //           textDirection: TextDirection.ltr,
-  //           child: new HomePage())));
+  //runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -27,10 +19,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Mano Experta',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
-        useMaterial3: true,
-      ),
+      theme: ThemeData(primaryColor: Color.fromRGBO(58, 66, 86, 1.0)),
       //home: const MyHomePage(title: 'Mano Experta'),
       home: const HomePage(),
     );

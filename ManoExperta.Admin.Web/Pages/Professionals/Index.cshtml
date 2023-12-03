@@ -1,0 +1,41 @@
+@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Professionals";
+}
+
+<h1 class="display-4 fw-bold">Profesionales</h1>
+<p class="fs-5">Listado de profesionales</p>
+
+<a class="btn btn-primary" asp-page="/Professionals/Create">Crear Nuevo</a>
+
+<div class="row">
+    <div class="col-md-12">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>Usuario</th>
+                    <th>Tipo</th>
+                    <th>Categorias</th>
+                    <th>Telefono</th>
+                    <th>Email</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.Professionals)
+                {
+                    <tr>
+                        <td>@item.UserName</td>
+                        <td>@item.TypeName</td>
+                        <td>@item.Categories</td>
+                        <td>@item.PhoneNumbers?.FirstOrDefault()?.Number</td>
+                        <td>@item.Emails?.FirstOrDefault()?.Address</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+
+
+

@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="../buildMultiTargeting/ManoExperta.Admin.Web.props" />
+</Project>

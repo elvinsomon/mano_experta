@@ -1,4 +1,5 @@
 using System.Text.Json;
+using ManoExperta.Admin.Web.Data;
 using ManoExperta.Admin.Web.Pages.Professionals.DTOs;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -8,23 +9,23 @@ namespace ManoExperta.Admin.Web.Pages.Professionals;
 [BindProperties(SupportsGet = true)]
 public class IndexModel : PageModel
 {
-    private readonly IHttpClientFactory _clientFactory;
-    private readonly IConfiguration _configuration;
+    private readonly IBaseApiClient _baseApiClient;
     private readonly ILogger<IndexModel> _logger;
     public IEnumerable<Professional>? Professionals { get; set; }
+    public List<CategoryDto>? Categories { get; set; }
     public string CategorySelected { get; set; } = "PLMR";
 
-    public IndexModel(IHttpClientFactory clientFactory, IConfiguration configuration, ILogger<IndexModel> logger)
+    public IndexModel(ILogger<IndexModel> logger, IBaseApiClient baseApiClient)
     {
         _logger = logger;
-        _clientFactory = clientFactory;
-        _configuration = configuration;
+        _baseApiClient = baseApiClient;
     }
 
     public async Task<IActionResult> OnGet()
     {
         try
         {
+            Categories = (await GetCategories())?.ToList();
             Professionals = await GetProfessionals();
             return Page();
         }
@@ -35,23 +36,23 @@ public class IndexModel : PageModel
         }
     }
 
+    private async Task<IEnumerable<CategoryDto>?> GetCategories()
+    {
+        var categories = await _baseApiClient.GetAsync<IEnumerable<CategoryDto>>("Category/GetAll");
+        return categories;
+    }
+
     private async Task<IEnumerable<Professional>?> GetProfessionals()
     {
-        var client = _clientFactory.CreateClient();
-        var baseUrl = _configuration.GetValue<string>("ApiUrl");
-        var request = new HttpRequestMessage(HttpMethod.Get, $"{baseUrl}/Professional/GetByCategory?categoryCode={CategorySelected}");
-        var response = await client.SendAsync(request);
+        var professionals = await _baseApiClient
+            .GetAsync<IEnumerable<Professional>>($"Professional/GetByCategory?categoryCode={CategorySelected}");
 
-        if (!response.IsSuccessStatusCode)
-            return null;
-
-        var content = await response.Content.ReadAsStringAsync();
-        var options = new JsonSerializerOptions
-        {
-            PropertyNameCaseInsensitive = true
-        };
-
-        var professionals = JsonSerializer.Deserialize<IEnumerable<Professional>>(content, options);
         return professionals;
+    }
+
+    public record CategoryDto
+    {
+        public string? Code { get; set; }
+        public string? Name { get; set; }
     }
 }

@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("ManoExperta.Admin.Web")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+d4e4e962059834e2deb5911bc3de0dff2dd198e8")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
 [assembly: System.Reflection.AssemblyProductAttribute("ManoExperta.Admin.Web")]
 [assembly: System.Reflection.AssemblyTitleAttribute("ManoExperta.Admin.Web")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

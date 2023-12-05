@@ -1,6 +1,8 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:mano_experta_mobile/app/screens/detail_page.dart';
+import 'package:mano_experta_mobile/app/screens/professional_detail_page.dart';
 import '../data/models/professional.dart';
 import '../data/service/professional_service.dart';
 
@@ -28,29 +30,24 @@ class _HomePageState extends State<HomePage> {
       isLoaded = true;
     });
   }
-   final topAppBar = AppBar(
-      elevation: 0.1,
-      backgroundColor:const Color.fromARGB(255, 233, 237, 245),
-      title:  const Text("Mano Experta",
-                      style:
-                          TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-                      textAlign: TextAlign.center),
-    );
+
+  final topAppBar = AppBar(
+    elevation: 0.1,
+    backgroundColor: const Color.fromARGB(255, 233, 237, 245),
+    title: const Text("Mano Experta",
+        style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+        textAlign: TextAlign.center),
+  );
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Color.fromARGB(255, 233, 237, 245),
-       appBar: topAppBar,
+      appBar: topAppBar,
       body: isLoaded && professionals != null
           ? SafeArea(
               child: Column(
                 children: [
-                  // const Text("Mano Experta",
-                  //     style:
-                  //         TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-                  //     textAlign: TextAlign.center),
-                  
                   const SizedBox(height: 24),
                   Row(
                     children: [
@@ -71,6 +68,8 @@ class _HomePageState extends State<HomePage> {
                                 child: Text("Plomero"), value: "PLMR"),
                             DropdownMenuItem(
                                 child: Text("Electricista"), value: "ELTC"),
+                            DropdownMenuItem(
+                                child: Text("Jardineria"), value: "JDNR"),
                           ]),
                     ],
                   ),
@@ -78,17 +77,17 @@ class _HomePageState extends State<HomePage> {
                   const Row(
                     children: [
                       Expanded(
+                          child: Text('Usuario',
+                              textAlign: TextAlign.center,
+                              style: TextStyle(fontWeight: FontWeight.bold))),
+                      Expanded(
                           child: Text('Nombre',
                               textAlign: TextAlign.center,
                               style: TextStyle(fontWeight: FontWeight.bold))),
                       Expanded(
                           child: Text('Telefono',
                               textAlign: TextAlign.center,
-                              style: TextStyle(fontWeight: FontWeight.bold))),
-                      Expanded(
-                          child: Text('Email',
-                              textAlign: TextAlign.center,
-                              style: TextStyle(fontWeight: FontWeight.bold))),
+                              style: TextStyle(fontWeight: FontWeight.bold)))
                     ],
                   ),
                   const SizedBox(height: 8),
@@ -102,25 +101,55 @@ class _HomePageState extends State<HomePage> {
                                 (professional) => Column(
                                   children: [
                                     const SizedBox(height: 4),
-                                    Row(
-                                      children: [
-                                        Expanded(
-                                            child: Text(
-                                                professional.fullName ??
-                                                    'No name')),
-                                        Expanded(
-                                          child: Text(professional.phoneNumbers
-                                                  .firstOrNull!.number
-                                                  .toString() ??
-                                              'No phone number'),
-                                        ),
-                                        Expanded(
+                                    GestureDetector(
+                                      onTap: () {
+                                        // Navegar a la página de detalles del profesional cuando se toque el elemento
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) =>
+                                                ProfessionalDetailPage(
+                                                    professional: professional),
+                                          ),
+                                        );
+                                      },
+                                      child: Row(
+                                        children: [
+                                          Expanded(
+                                            child: Text(professional.userName ??
+                                                'No user'),
+                                          ),
+                                          Expanded(
+                                            child: Text(professional.fullName ??
+                                                'No name'),
+                                          ),
+                                          Expanded(
                                             child: Text(professional
-                                                    .emails.firstOrNull!.address
+                                                    .phoneNumbers
+                                                    .firstOrNull!
+                                                    .number
                                                     .toString() ??
-                                                'No email')),
-                                      ],
+                                                'No phone number'),
+                                          ),
+                                        ],
+                                      ),
                                     ),
+                                    // Row(
+                                    //   children: [
+                                    //     Expanded(
+                                    //         child: Text(professional.userName ??
+                                    //             'No user')),
+                                    //     Expanded(
+                                    //         child: Text(professional.fullName ??
+                                    //             'No name')),
+                                    //     Expanded(
+                                    //       child: Text(professional.phoneNumbers
+                                    //               .firstOrNull!.number
+                                    //               .toString() ??
+                                    //           'No phone number'),
+                                    //     ),
+                                    //   ],
+                                    // ),
                                     const SizedBox(height: 4),
                                     const Divider(),
                                   ],

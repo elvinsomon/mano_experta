@@ -12,7 +12,7 @@ public class GetByCategory
         public string CategoryCode { get; set; } = string.Empty;
     }
 
-    public class Result 
+    public class Result
     {
         public Guid Id { get; set; }
         public string? UserName { get; set; }
@@ -33,7 +33,20 @@ public class GetByCategory
         }
         public class PhoneNumberDto
         {
-            public string? Number { get; set; }
+            public string? NumberRaw { get; set; }
+            public string? Number
+            {
+                get
+                {
+                    if (NumberRaw is null || NumberRaw.Length < 10)
+                        return NumberRaw;
+
+                    if (NumberRaw.Length == 10)
+                        return $"({NumberRaw.Substring(0, 3)}) {NumberRaw.Substring(3, 3)}-{NumberRaw.Substring(6, 4)}";
+
+                    return $"({NumberRaw.Substring(0, 3)}) {NumberRaw.Substring(3, 3)}-{NumberRaw.Substring(6, 4)}";
+                }
+            }
         }
 
         public class EmailDto
@@ -46,7 +59,7 @@ public class GetByCategory
     {
         public async Task<IEnumerable<Result>> Handle(Query query)
         {
-            
+
             var professionals = await context.ProfessionalCategories
                 .Where(c => c.Code == query.CategoryCode)
                 .SelectMany(c => c.Professionals!)
@@ -73,7 +86,7 @@ public class GetByCategory
                 }).ToArray(),
                 PhoneNumbers = p.PhoneNumber!.Select(pn => new Result.PhoneNumberDto
                 {
-                    Number = pn.Number
+                    NumberRaw = pn.Number
                 }).ToArray(),
                 Emails = p.Email!.Select(e => new Result.EmailDto
                 {

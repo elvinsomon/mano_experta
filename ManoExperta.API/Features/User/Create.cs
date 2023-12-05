@@ -22,6 +22,8 @@ namespace ManoExperta.API.Features.UserFeature
         public record WorkingHoursDto
         {
             public int Day { get; init; }
+            public string DayName => Day == 7 ? "Sunday" : ((DayOfWeek)Day).ToString();
+
             public int Start { get; init; }
             public int End { get; init; }
         }
@@ -79,6 +81,18 @@ namespace ManoExperta.API.Features.UserFeature
 
             private static List<WorkingHours> GetWorkingHours(Command command)
             {
+                if (command.WorkingHours.Length == 0)
+                {
+                    return
+                    [
+                        new WorkingHours(1, 8, 17),
+                        new WorkingHours(2, 8, 17),
+                        new WorkingHours(3, 8, 17),
+                        new WorkingHours(4, 8, 17),
+                        new WorkingHours(5, 8, 17)
+                    ];
+                }
+                
                 var workingHours = new List<WorkingHours>();
 
                 foreach (var workingHoursDto in command.WorkingHours)

@@ -119,22 +119,26 @@ class WorkingHour {
     int day;
     int start;
     int end;
+    String dayName;
 
     WorkingHour({
         required this.day,
         required this.start,
         required this.end,
+        required this.dayName,
     });
 
     factory WorkingHour.fromJson(Map<String, dynamic> json) => WorkingHour(
         day: json["day"],
         start: json["start"],
         end: json["end"],
+        dayName: json["dayName"],
     );
 
     Map<String, dynamic> toJson() => {
         "day": day,
         "start": start,
         "end": end,
+        "dayName": dayName,
     };
 }
